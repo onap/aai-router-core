@@ -67,7 +67,7 @@ public class EventBusConsumer extends ScheduledPollConsumer {
 
     setScheduledExecutorService(new ScheduledThreadPoolExecutor(endpoint.getPoolSize()));
 
-    String[] urls = endpoint.getUrl().split(",");
+    String[] urls = endpoint.getUrl().split(EventBusProducer.SEPARATOR);
 
     List<String> urlList = null;
 

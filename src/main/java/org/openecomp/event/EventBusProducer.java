@@ -31,6 +31,8 @@ import org.apache.camel.impl.DefaultProducer;
  * The EventBus producer.
  */
 public class EventBusProducer extends DefaultProducer {
+  static final String SEPARATOR = ",";
+
   private EventBusEndpoint endpoint;
 
   public EventBusProducer(EventBusEndpoint endpoint) {
