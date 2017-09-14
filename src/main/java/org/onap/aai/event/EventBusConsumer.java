@@ -20,7 +20,7 @@
  *
  * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  */
-package org.openecomp.event;
+package org.onap.aai.event;
 
 import com.att.nsa.cambria.client.CambriaClientBuilders;
 import com.att.nsa.cambria.client.CambriaClientBuilders.ConsumerBuilder;
@@ -30,10 +30,10 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
+import org.omap.aai.logging.RouterCoreMsgs;
 import org.openecomp.cl.api.Logger;
 import org.openecomp.cl.eelf.LoggerFactory;
 import org.openecomp.cl.mdc.MdcContext;
-import org.openecomp.logging.RouterCoreMsgs;
 
 import java.net.MalformedURLException;
 import java.security.GeneralSecurityException;

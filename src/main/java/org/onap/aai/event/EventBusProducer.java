@@ -20,34 +20,24 @@
  *
  * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  */
-package org.openecomp.logging;
+package org.onap.aai.event;
 
-import com.att.eelf.i18n.EELFResourceManager;
-import org.openecomp.cl.eelf.LogMessageEnum;
+import org.apache.camel.Exchange;
+import org.apache.camel.impl.DefaultProducer;
 
-public enum RouterCoreMsgs implements LogMessageEnum {
+/**
+ * The EventBus producer.
+ */
+public class EventBusProducer extends DefaultProducer {
+  private EventBusEndpoint endpoint;
 
-  /**
-   * Processed event {0}. Result: {1}.
-   * 
-   * Arguments: {0} = event topic {1} = result
-   */
-  PROCESS_EVENT,
-  /**
-   * Arguments: {0} = Processing exception
-   */
-  EVENT_PROCESSING_EXCEPTION,
-
-  /**
-   * Arguments: {0} = Creation exception
-   */
-  EVENT_CONSUMER_CREATION_EXCEPTION;
-
-
-  /**
-   * Static initializer to ensure the resource bundles for this class are loaded...
-   */
-  static {
-    EELFResourceManager.loadMessageBundle("logging/RouterCoreMsgs");
+  public EventBusProducer(EventBusEndpoint endpoint) {
+    super(endpoint);
+    this.endpoint = endpoint;
   }
+
+  public void process(Exchange exchange) throws Exception {
+    // Publishing to event bus is currently not supported
+  }
+
 }

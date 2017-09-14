@@ -20,19 +20,18 @@
  *
  * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  */
-package org.openecomp.rest;
+package org.onap.aai.rest;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultProducer;
 import org.eclipse.jetty.util.security.Password;
+import org.onap.aai.event.EventBusConsumer;
+import org.onap.aai.restclient.client.Headers;
+import org.onap.aai.restclient.client.OperationResult;
+import org.onap.aai.restclient.client.RestClient;
+import org.onap.aai.restclient.rest.HttpUtil;
 import org.openecomp.cl.api.Logger;
 import org.openecomp.cl.eelf.LoggerFactory;
-import org.openecomp.event.EventBusConsumer;
-
-import org.openecomp.restclient.client.Headers;
-import org.openecomp.restclient.client.OperationResult;
-import org.openecomp.restclient.client.RestClient;
-import org.openecomp.restclient.rest.HttpUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;

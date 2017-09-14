@@ -20,24 +20,20 @@
  *
  * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  */
-package org.openecomp.event;
+package org.onap.aai.rest;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.Processor;
+import org.apache.camel.impl.DefaultConsumer;
+
 
 /**
- * The EventBus producer.
+ * The RestClient consumer.
  */
-public class EventBusProducer extends DefaultProducer {
-  private EventBusEndpoint endpoint;
+public class RestClientConsumer extends DefaultConsumer {
+  private final RestClientEndpoint endpoint;
 
-  public EventBusProducer(EventBusEndpoint endpoint) {
-    super(endpoint);
+  public RestClientConsumer(RestClientEndpoint endpoint, Processor processor) {
+    super(endpoint, processor);
     this.endpoint = endpoint;
   }
-
-  public void process(Exchange exchange) throws Exception {
-    // Publishing to event bus is currently not supported
-  }
-
 }

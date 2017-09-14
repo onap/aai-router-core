@@ -20,7 +20,7 @@
  *
  * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  */
-package org.openecomp.rest;
+package org.onap.aai.rest;
 
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;

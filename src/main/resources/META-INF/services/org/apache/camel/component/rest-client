@@ -1,1 +1,1 @@
-class=org.openecomp.rest.RestClientComponent
+class=org.onap.aai.rest.RestClientComponent

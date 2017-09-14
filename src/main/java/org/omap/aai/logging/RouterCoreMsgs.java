@@ -20,34 +20,34 @@
  *
  * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  */
-package org.openecomp.rest;
+package org.omap.aai.logging;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.Endpoint;
-import org.apache.camel.impl.UriEndpointComponent;
+import com.att.eelf.i18n.EELFResourceManager;
+import org.openecomp.cl.eelf.LogMessageEnum;
 
-import java.util.Map;
+public enum RouterCoreMsgs implements LogMessageEnum {
+
+  /**
+   * Processed event {0}. Result: {1}.
+   * 
+   * Arguments: {0} = event topic {1} = result
+   */
+  PROCESS_EVENT,
+  /**
+   * Arguments: {0} = Processing exception
+   */
+  EVENT_PROCESSING_EXCEPTION,
+
+  /**
+   * Arguments: {0} = Creation exception
+   */
+  EVENT_CONSUMER_CREATION_EXCEPTION;
 
 
-/**
- * Represents the component that manages {@link RestClientEndpoint}.
- */
-public class RestClientComponent extends UriEndpointComponent {
-
-  public RestClientComponent() {
-    super(RestClientEndpoint.class);
-  }
-
-  public RestClientComponent(CamelContext context) {
-    super(context, RestClientEndpoint.class);
-  }
-
-  @Override
-  protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters)
-      throws Exception {
-
-    Endpoint endpoint = new RestClientEndpoint(uri, this);
-    setProperties(endpoint, parameters);
-    return endpoint;
+  /**
+   * Static initializer to ensure the resource bundles for this class are loaded...
+   */
+  static {
+    EELFResourceManager.loadMessageBundle("logging/RouterCoreMsgs");
   }
 }
