@@ -20,20 +20,31 @@
  *
  * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  */
-package org.openecomp.rest;
+package org.onap.aai.event;
 
-import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultConsumer;
+import org.apache.camel.CamelContext;
+import org.apache.camel.Endpoint;
+import org.apache.camel.impl.UriEndpointComponent;
 
+import java.util.Map;
 
 /**
- * The RestClient consumer.
+ * Represents the component that manages {@link EventBusEndpoint}.
  */
-public class RestClientConsumer extends DefaultConsumer {
-  private final RestClientEndpoint endpoint;
+public class EventBusComponent extends UriEndpointComponent {
 
-  public RestClientConsumer(RestClientEndpoint endpoint, Processor processor) {
-    super(endpoint, processor);
-    this.endpoint = endpoint;
+  public EventBusComponent() {
+    super(EventBusEndpoint.class);
+  }
+
+  public EventBusComponent(CamelContext context) {
+    super(context, EventBusEndpoint.class);
+  }
+
+  protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters)
+      throws Exception {
+    Endpoint endpoint = new EventBusEndpoint(uri, this);
+    setProperties(endpoint, parameters);
+    return endpoint;
   }
 }

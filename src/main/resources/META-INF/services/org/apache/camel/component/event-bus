@@ -1,1 +1,1 @@
-class=org.openecomp.event.EventBusComponent
+class=org.onap.aai.event.EventBusComponent

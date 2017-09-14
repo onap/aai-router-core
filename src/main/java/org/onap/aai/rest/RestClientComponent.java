@@ -20,7 +20,7 @@
  *
  * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  */
-package org.openecomp.event;
+package org.onap.aai.rest;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
@@ -28,22 +28,25 @@ import org.apache.camel.impl.UriEndpointComponent;
 
 import java.util.Map;
 
+
 /**
- * Represents the component that manages {@link EventBusEndpoint}.
+ * Represents the component that manages {@link RestClientEndpoint}.
  */
-public class EventBusComponent extends UriEndpointComponent {
+public class RestClientComponent extends UriEndpointComponent {
 
-  public EventBusComponent() {
-    super(EventBusEndpoint.class);
+  public RestClientComponent() {
+    super(RestClientEndpoint.class);
   }
 
-  public EventBusComponent(CamelContext context) {
-    super(context, EventBusEndpoint.class);
+  public RestClientComponent(CamelContext context) {
+    super(context, RestClientEndpoint.class);
   }
 
+  @Override
   protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters)
       throws Exception {
-    Endpoint endpoint = new EventBusEndpoint(uri, this);
+
+    Endpoint endpoint = new RestClientEndpoint(uri, this);
     setProperties(endpoint, parameters);
     return endpoint;
   }
