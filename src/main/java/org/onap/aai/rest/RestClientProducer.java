@@ -30,8 +30,8 @@ import org.onap.aai.restclient.client.Headers;
 import org.onap.aai.restclient.client.OperationResult;
 import org.onap.aai.restclient.client.RestClient;
 import org.onap.aai.restclient.rest.HttpUtil;
-import org.openecomp.cl.api.Logger;
-import org.openecomp.cl.eelf.LoggerFactory;
+import org.onap.aai.cl.api.Logger;
+import org.onap.aai.cl.eelf.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.HashMap;

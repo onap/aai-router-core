@@ -31,9 +31,9 @@ import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
 import org.onap.aai.logging.RouterCoreMsgs;
-import org.openecomp.cl.api.Logger;
-import org.openecomp.cl.eelf.LoggerFactory;
-import org.openecomp.cl.mdc.MdcContext;
+import org.onap.aai.cl.api.Logger;
+import org.onap.aai.cl.eelf.LoggerFactory;
+import org.onap.aai.cl.mdc.MdcContext;
 
 import java.net.MalformedURLException;
 import java.security.GeneralSecurityException;
