@@ -47,7 +47,7 @@ import javax.ws.rs.core.Response;
  */
 public class RestClientProducer extends DefaultProducer {
 
-  private static enum Operation {
+  private enum Operation {
     GET, PUT, POST, DELETE
   }
 
@@ -143,7 +143,7 @@ public class RestClientProducer extends DefaultProducer {
 
     String toEndpoint = ((String) exchange.getProperty(Exchange.TO_ENDPOINT));
 
-    String operation = toEndpoint.substring(toEndpoint.lastIndexOf("://") + 3);
+    String operation = toEndpoint.substring((toEndpoint.lastIndexOf("://") + 3));
 
     int position = operation.indexOf('?');
     if (position >= 0) {
