@@ -47,7 +47,7 @@ import javax.ws.rs.core.Response;
  */
 public class RestClientProducer extends DefaultProducer {
 
-  private static enum Operation {
+  private enum Operation {
     GET, PUT, POST, DELETE
   }
 
