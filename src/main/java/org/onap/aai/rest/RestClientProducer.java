@@ -141,9 +141,9 @@ public class RestClientProducer extends DefaultProducer {
    */
   private Operation getOperation(Exchange exchange) {
 
-    String toEndpoint = (String) exchange.getProperty(Exchange.TO_ENDPOINT);
+    String toEndpoint = ((String) exchange.getProperty(Exchange.TO_ENDPOINT));
 
-    String operation = toEndpoint.substring((toEndpoint.lastIndexOf("://") + 3));
+    String operation = toEndpoint.substring(toEndpoint.lastIndexOf("://") + 3);
 
     int position = operation.indexOf('?');
     if (position >= 0) {
