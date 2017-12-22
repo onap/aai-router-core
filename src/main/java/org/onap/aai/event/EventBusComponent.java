@@ -41,7 +41,7 @@ public class EventBusComponent extends UriEndpointComponent {
     super(context, EventBusEndpoint.class);
   }
 
- @Override
+
   protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters)
       throws Exception {
     Endpoint endpoint = new EventBusEndpoint(uri, this);
