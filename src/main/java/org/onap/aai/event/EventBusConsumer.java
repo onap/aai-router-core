@@ -120,14 +120,14 @@ public class EventBusConsumer extends ScheduledPollConsumer {
     }
     return processCount;
   }
-  @Override
+
   protected void doStop() throws Exception {
     super.doStop();
     if (consumer != null) {
       consumer.close();
     }
   }
-
+  @Override
   protected void doShutdown() throws Exception {
     super.doShutdown();
     if (consumer != null) {
