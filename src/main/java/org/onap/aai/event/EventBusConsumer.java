@@ -148,7 +148,7 @@ public class EventBusConsumer extends ScheduledPollConsumer {
       this.message = message;
       this.topic = topic;
     }
-
+	@Override
     public void run() {
       try {
 
