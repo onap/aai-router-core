@@ -75,7 +75,7 @@ public class EventBusEndpoint extends DefaultEndpoint {
   public EventBusEndpoint(String endpointUri) {
     super(endpointUri);
   }
-
+  @Override
   public Producer createProducer() throws Exception {
     return new EventBusProducer(this);
   }
