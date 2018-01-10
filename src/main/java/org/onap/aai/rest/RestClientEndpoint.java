@@ -82,7 +82,7 @@ public class RestClientEndpoint extends DefaultEndpoint {
   public Producer createProducer() throws Exception {
     return new RestClientProducer(this);
   }
-
+  @Override
   public Consumer createConsumer(Processor processor) throws Exception {
     return new RestClientConsumer(this, processor);
   }
