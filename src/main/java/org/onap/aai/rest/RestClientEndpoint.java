@@ -78,7 +78,7 @@ public class RestClientEndpoint extends DefaultEndpoint {
   protected void setProperties(Object bean, Map<String, Object> parameters) throws Exception {
     super.setProperties(bean, parameters);
   }
-
+  @Override
   public Producer createProducer() throws Exception {
     return new RestClientProducer(this);
   }
