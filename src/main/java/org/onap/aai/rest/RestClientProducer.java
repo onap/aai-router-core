@@ -46,6 +46,8 @@ import javax.ws.rs.core.Response;
  * The EcompRest producer.
  */
 public class RestClientProducer extends DefaultProducer {
+ 
+  private static final String CONTENT_TYPE ="Content-type";
 
   private static enum Operation {
     GET, PUT, POST, DELETE
@@ -194,9 +196,9 @@ public class RestClientProducer extends DefaultProducer {
       headers.put(Headers.ACCEPT,
           Arrays.asList(exchange.getIn().getHeader(Headers.ACCEPT).toString()));
     }
-    if (exchange.getIn().getHeader("Content-Type") != null) {
-      headers.put("Content-Type",
-          Arrays.asList(exchange.getIn().getHeader("Content-Type").toString()));
+    if (exchange.getIn().getHeader(CONTENT_TYPE) != null) {
+      headers.put(CONTENT_TYPE,
+          Arrays.asList(exchange.getIn().getHeader(CONTENT_TYPE).toString()));
     }
 
     return headers;
