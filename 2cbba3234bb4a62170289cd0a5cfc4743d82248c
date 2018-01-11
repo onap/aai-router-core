@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_fe2f9d86",
+        "filename": "src/main/java/org/onap/aai/event/EventBusConsumer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 75
+      },
+      "writtenOn": "2018-01-11T05:55:34Z",
+      "side": 1,
+      "message": "@Aishwarya, why did you remove the @Override here?",
+      "revId": "2cbba3234bb4a62170289cd0a5cfc4743d82248c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
