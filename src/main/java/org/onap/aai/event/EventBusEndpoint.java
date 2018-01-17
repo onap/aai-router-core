@@ -83,7 +83,7 @@ public class EventBusEndpoint extends DefaultEndpoint {
   public Consumer createConsumer(Processor processor) throws Exception {
     return new EventBusConsumer(this, processor);
   }
-
+  @Override
   public boolean isSingleton() {
     return false;
   }
