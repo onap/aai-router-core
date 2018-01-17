@@ -86,7 +86,7 @@ public class RestClientEndpoint extends DefaultEndpoint {
   public Consumer createConsumer(Processor processor) throws Exception {
     return new RestClientConsumer(this, processor);
   }
-
+  @Override
   public boolean isSingleton() {
     return true;
   }
