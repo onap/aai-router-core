@@ -127,7 +127,7 @@ public class EventBusConsumer extends ScheduledPollConsumer {
       consumer.close();
     }
   }
-
+  @Override
   protected void doShutdown() throws Exception {
     super.doShutdown();
     if (consumer != null) {
