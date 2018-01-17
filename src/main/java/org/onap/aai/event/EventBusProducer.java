@@ -35,7 +35,7 @@ public class EventBusProducer extends DefaultProducer {
     super(endpoint);
     this.endpoint = endpoint;
   }
-
+  @Override
   public void process(Exchange exchange) throws Exception {
     // Publishing to event bus is currently not supported
   }
