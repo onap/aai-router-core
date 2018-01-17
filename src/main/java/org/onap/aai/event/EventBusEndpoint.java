@@ -79,7 +79,7 @@ public class EventBusEndpoint extends DefaultEndpoint {
   public Producer createProducer() throws Exception {
     return new EventBusProducer(this);
   }
-
+  @Override
   public Consumer createConsumer(Processor processor) throws Exception {
     return new EventBusConsumer(this, processor);
   }
