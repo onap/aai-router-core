@@ -106,7 +106,7 @@ public class EventBusConsumer extends ScheduledPollConsumer {
 
     int processCount = 0;
 
-    Iterable<String> messages = null;
+    Iterable<String> messages;
 
     messages = consumer.fetch();
 
