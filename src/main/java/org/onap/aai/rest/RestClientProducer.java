@@ -87,7 +87,7 @@ public class RestClientProducer extends DefaultProducer {
     }
 
     // Now, invoke the REST client to perform the operation.
-    OperationResult result = null;
+    OperationResult result;
     switch (getOperation(exchange)) {
 
       case GET:
