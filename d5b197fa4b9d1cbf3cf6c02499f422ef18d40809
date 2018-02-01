@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Tian Lee <TianL@amdocs.com>
+Submitted-by: Tian Lee <TianL@amdocs.com>
+Submitted-at: Thu, 01 Feb 2018 17:39:17 +0000
+Reviewed-on: https://gerrit.onap.org/r/29943
+Project: aai/router-core
+Branch: refs/heads/master
