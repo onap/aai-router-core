@@ -106,9 +106,7 @@ public class EventBusConsumer extends ScheduledPollConsumer {
 
     int processCount = 0;
 
-    Iterable<String> messages = null;
-
-    messages = consumer.fetch();
+    Iterable<String> messages = consumer.fetch();
 
     String topic = endpoint.getEventTopic();
 
