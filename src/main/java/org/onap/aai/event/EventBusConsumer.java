@@ -161,7 +161,7 @@ public class EventBusConsumer extends ScheduledPollConsumer {
         }
 
       } catch (Exception e) {
-        logger.error(RouterCoreMsgs.EVENT_PROCESSING_EXCEPTION, e.getLocalizedMessage());
+        logger.error(RouterCoreMsgs.EVENT_PROCESSING_EXCEPTION,e,e.getLocalizedMessage());
       } finally {
         // log exception if an exception occurred and was not handled
         if (message.getException() != null) {
