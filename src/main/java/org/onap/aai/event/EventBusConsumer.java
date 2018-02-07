@@ -89,7 +89,7 @@ public class EventBusConsumer extends ScheduledPollConsumer {
       consumer = consumerBuilder.build();
 
     } catch (MalformedURLException | GeneralSecurityException e) {
-      logger.error(RouterCoreMsgs.EVENT_CONSUMER_CREATION_EXCEPTION, e.getLocalizedMessage());
+      logger.error(RouterCoreMsgs.EVENT_CONSUMER_CREATION_EXCEPTION, e, e.getLocalizedMessage());
     }
   }
 
