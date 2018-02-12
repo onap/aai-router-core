@@ -117,15 +117,16 @@ public class RestClientProducer extends DefaultProducer {
         break;
     }
 
-    // Populate the OUT message with our result.
-    exchange.getOut().setHeader(RestClientEndpoint.OUT_HEADER_RESPONSE_CODE,
+    /** Just use IN headers as camel does not pass incoming headers from IN to OUT so they might be lost .
+    Reference : http://camel.apache.org/using-getin-or-getout-methods-on-exchange.html **/
+    exchange.getIn().setHeader(RestClientEndpoint.OUT_HEADER_RESPONSE_CODE,
         result.getResultCode());
     if (HttpUtil.isHttpResponseClassSuccess(result.getResultCode())) {
-      exchange.getOut().setHeader(RestClientEndpoint.OUT_HEADER_RESPONSE_MSG,
+      exchange.getIn().setHeader(RestClientEndpoint.OUT_HEADER_RESPONSE_MSG,
           responseStatusStringFromResult(result));
-      exchange.getOut().setBody(result.getResult());
+      exchange.getIn().setBody(result.getResult());
     } else {
-      exchange.getOut().setHeader(RestClientEndpoint.OUT_HEADER_RESPONSE_MSG,
+      exchange.getIn().setHeader(RestClientEndpoint.OUT_HEADER_RESPONSE_MSG,
           result.getFailureCause());
     }
 
