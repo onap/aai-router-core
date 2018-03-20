@@ -17,8 +17,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * ============LICENSE_END=========================================================
- *
- * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  */
 package org.onap.aai.event;
 
@@ -27,60 +25,97 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.camel.Endpoint;
 import org.junit.Before;
 import org.junit.Test;
 
 public class EventBusTest {
 
-  /**
-   * Test case initialization
-   * 
-   * @throws Exception the exception
-   */
-  @Before
-  public void init() throws Exception {
-  }
-  
-  @Test
-  public void validate() throws Exception {
-
-    try {
-      EventBusComponent rc = new EventBusComponent();
-      EventBusEndpoint endpoint = new EventBusEndpoint("http://host.com:8443/endpoint", rc);
-
-      endpoint.setApiSecret("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
-      endpoint.setApiKey("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
-      endpoint.setEventTopic("eventTopic");
-      endpoint.setGroupId("groupId");
-      endpoint.setGroupName("gn");
-      endpoint.setName("name");
-      endpoint.setPoolSize(45);
-      endpoint.setPollingDelay(10);
-      endpoint.setUrl("url");
-
-      assertTrue(endpoint.getApiSecret().compareTo("onapSecret") == 0);
-      assertTrue(endpoint.getApiKey().compareTo("onapSecret") == 0);
-      assertTrue(endpoint.getEventTopic().compareTo("eventTopic") == 0);
-      assertTrue(endpoint.getGroupId().compareTo("groupId") == 0);
-      assertTrue(endpoint.getGroupName().compareTo("gn") == 0);
-      assertTrue(endpoint.getName().compareTo("name") == 0);
-      assertTrue(endpoint.getPoolSize() == 45);
-      assertTrue(endpoint.getPollingDelay() == 10);
-      assertTrue(endpoint.getUrl().compareTo("url") == 0);
-      assertFalse(endpoint.isSingleton());
-      
-      EventBusProducer producer = (EventBusProducer)endpoint.createProducer();
-      assertTrue(producer.getEndpoint() != null);
+    /**
+     * Test case initialization
+     * 
+     * @throws Exception the exception
+     */
+    @Before
+    public void init() throws Exception {
     }
-    catch (Exception ex) {
-      StringWriter writer = new StringWriter();
-      PrintWriter printWriter = new PrintWriter( writer );
-      ex.printStackTrace( printWriter );
-      printWriter.flush();
-      System.out.println(writer.toString());
-      throw ex;
+
+    @Test
+    public void validateProducer() throws Exception {
+        try {
+            EventBusComponent rc = new EventBusComponent();            
+            EventBusEndpoint endpoint = new EventBusEndpoint("http://host.com:8443/endpoint", rc);
+            endpoint.setApiSecret("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
+            endpoint.setApiKey("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
+            endpoint.setEventTopic("eventTopic");
+            endpoint.setGroupId("groupId");
+            endpoint.setGroupName("gn");
+            endpoint.setName("name");
+            endpoint.setPoolSize(45);
+            endpoint.setPollingDelay(10);
+            endpoint.setUrl("url");
+
+            assertTrue(endpoint.getApiSecret().compareTo("onapSecret") == 0);
+            assertTrue(endpoint.getApiKey().compareTo("onapSecret") == 0);
+            assertTrue(endpoint.getEventTopic().compareTo("eventTopic") == 0);
+            assertTrue(endpoint.getGroupId().compareTo("groupId") == 0);
+            assertTrue(endpoint.getGroupName().compareTo("gn") == 0);
+            assertTrue(endpoint.getName().compareTo("name") == 0);
+            assertTrue(endpoint.getPoolSize() == 45);
+            assertTrue(endpoint.getPollingDelay() == 10);
+            assertTrue(endpoint.getUrl().compareTo("url") == 0);
+            assertFalse(endpoint.isSingleton());
+
+            EventBusProducer producer = (EventBusProducer)endpoint.createProducer();
+            assertTrue(producer.getEndpoint() != null);
+        }
+        catch (Exception ex) {
+            StringWriter writer = new StringWriter();
+            PrintWriter printWriter = new PrintWriter( writer );
+            ex.printStackTrace( printWriter );
+            printWriter.flush();
+            System.out.println(writer.toString());
+            throw ex;
+        }
     }
-  }
     
+    @Test
+    public void validateEventBusComponent() throws Exception {
+        EventBusComponent rc = new EventBusComponent(new TestCamelContext());
+        Endpoint endpoint = rc.createEndpoint("http://host.com:8443/endpoint", null, new HashMap<String, Object>());
+        assertTrue(endpoint.getEndpointUri().equals("http://host.com:8443/endpoint"));
+    }
+    
+    @Test
+    public void validateConsumer() throws Exception {
+        try {
+            EventBusComponent rc = new EventBusComponent();
+            EventBusEndpoint endpoint = new EventBusEndpoint("http://host.com:8443/endpoint", rc);
+
+            endpoint.setApiSecret("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
+            endpoint.setApiKey("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
+            endpoint.setEventTopic("eventTopic");
+            endpoint.setGroupId("groupId");
+            endpoint.setGroupName("gn");
+            endpoint.setName("name");
+            endpoint.setPoolSize(45);
+            endpoint.setPollingDelay(10);
+            endpoint.setUrl("url");
+
+            TestProcessor processor = new TestProcessor();
+            EventBusConsumer consumer = new EventBusConsumer(endpoint, processor);
+            
+        }
+        catch (Exception ex) {
+            StringWriter writer = new StringWriter();
+            PrintWriter printWriter = new PrintWriter( writer );
+            ex.printStackTrace( printWriter );
+            printWriter.flush();
+            System.out.println(writer.toString());
+            throw ex;
+        }
+    }
 }
