@@ -30,8 +30,10 @@ import java.util.Map;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
+import org.apache.camel.impl.DefaultMessage;
 import org.junit.Before;
 import org.junit.Test;
+import org.onap.aai.event.TestCamelContext;
 import org.onap.aai.logging.RouterCoreMsgs;
 import org.onap.aai.restclient.client.Headers;
 
@@ -72,7 +74,9 @@ public class RestClientTest {
 
             Exchange exchange = endpoint.createExchange();
             exchange.setProperty(Exchange.TO_ENDPOINT, "mock://get");
-            Message in = exchange.getIn();
+            DefaultMessage in = (DefaultMessage)exchange.getIn();
+            in.setCamelContext(new TestCamelContext());
+            
             in.setHeader(RestClientEndpoint.IN_HEADER_URL, "svc/endpoint");
             in.setHeader(Headers.FROM_APP_ID, "val1");
             in.setHeader(Headers.TRANSACTION_ID, "val2");

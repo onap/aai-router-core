@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -35,8 +36,10 @@ import org.apache.camel.Component;
 import org.apache.camel.ConsumerTemplate;
 import org.apache.camel.Endpoint;
 import org.apache.camel.ErrorHandlerFactory;
+import org.apache.camel.FluentProducerTemplate;
 import org.apache.camel.NoFactoryAvailableException;
 import org.apache.camel.PollingConsumer;
+import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.Route;
@@ -46,16 +49,29 @@ import org.apache.camel.ShutdownRoute;
 import org.apache.camel.ShutdownRunningTask;
 import org.apache.camel.StartupListener;
 import org.apache.camel.TypeConverter;
+import org.apache.camel.api.management.mbean.ManagedCamelContextMBean;
+import org.apache.camel.api.management.mbean.ManagedProcessorMBean;
+import org.apache.camel.api.management.mbean.ManagedRouteMBean;
 import org.apache.camel.builder.ErrorHandlerBuilder;
+import org.apache.camel.health.HealthCheckRegistry;
+import org.apache.camel.impl.DefaultHeadersMapFactory;
 import org.apache.camel.model.DataFormatDefinition;
+import org.apache.camel.model.HystrixConfigurationDefinition;
+import org.apache.camel.model.ProcessorDefinition;
 import org.apache.camel.model.RouteDefinition;
 import org.apache.camel.model.RoutesDefinition;
+import org.apache.camel.model.cloud.ServiceCallConfigurationDefinition;
 import org.apache.camel.model.rest.RestDefinition;
+import org.apache.camel.model.rest.RestsDefinition;
+import org.apache.camel.model.transformer.TransformerDefinition;
+import org.apache.camel.model.validator.ValidatorDefinition;
+import org.apache.camel.runtimecatalog.RuntimeCamelCatalog;
 import org.apache.camel.spi.AsyncProcessorAwaitManager;
 import org.apache.camel.spi.CamelContextNameStrategy;
 import org.apache.camel.spi.ClassResolver;
 import org.apache.camel.spi.DataFormat;
 import org.apache.camel.spi.DataFormatResolver;
+import org.apache.camel.spi.DataType;
 import org.apache.camel.spi.Debugger;
 import org.apache.camel.spi.EndpointRegistry;
 import org.apache.camel.spi.EndpointStrategy;
@@ -63,31 +79,41 @@ import org.apache.camel.spi.ExecutorServiceManager;
 import org.apache.camel.spi.ExecutorServiceStrategy;
 import org.apache.camel.spi.FactoryFinder;
 import org.apache.camel.spi.FactoryFinderResolver;
+import org.apache.camel.spi.HeadersMapFactory;
 import org.apache.camel.spi.InflightRepository;
 import org.apache.camel.spi.Injector;
 import org.apache.camel.spi.InterceptStrategy;
 import org.apache.camel.spi.Language;
 import org.apache.camel.spi.LifecycleStrategy;
+import org.apache.camel.spi.LogListener;
 import org.apache.camel.spi.ManagementMBeanAssembler;
 import org.apache.camel.spi.ManagementNameStrategy;
 import org.apache.camel.spi.ManagementStrategy;
+import org.apache.camel.spi.MessageHistoryFactory;
 import org.apache.camel.spi.ModelJAXBContextFactory;
 import org.apache.camel.spi.NodeIdFactory;
 import org.apache.camel.spi.PackageScanClassResolver;
 import org.apache.camel.spi.ProcessorFactory;
 import org.apache.camel.spi.Registry;
+import org.apache.camel.spi.ReloadStrategy;
 import org.apache.camel.spi.RestConfiguration;
 import org.apache.camel.spi.RestRegistry;
+import org.apache.camel.spi.RouteController;
 import org.apache.camel.spi.RoutePolicyFactory;
 import org.apache.camel.spi.RouteStartupOrder;
 import org.apache.camel.spi.RuntimeEndpointRegistry;
 import org.apache.camel.spi.ServicePool;
 import org.apache.camel.spi.ShutdownStrategy;
 import org.apache.camel.spi.StreamCachingStrategy;
+import org.apache.camel.spi.Transformer;
+import org.apache.camel.spi.TransformerRegistry;
 import org.apache.camel.spi.TypeConverterRegistry;
 import org.apache.camel.spi.UnitOfWorkFactory;
 import org.apache.camel.spi.UuidGenerator;
+import org.apache.camel.spi.Validator;
+import org.apache.camel.spi.ValidatorRegistry;
 import org.apache.camel.util.LoadPropertiesException;
+import org.apache.camel.util.jsse.SSLContextParameters;
 
 public class TestCamelContext implements CamelContext {
 
@@ -1236,6 +1262,389 @@ public class TestCamelContext implements CamelContext {
     public void setModelJAXBContextFactory(ModelJAXBContextFactory modelJAXBContextFactory) {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public Boolean isLogExhaustedMessageBody() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean isLogMask() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void setLogExhaustedMessageBody(Boolean arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setLogMask(Boolean arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void addHystrixConfiguration(String arg0, HystrixConfigurationDefinition arg1) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void addLogListener(LogListener arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void addRestConfiguration(RestConfiguration arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void addService(Object arg0, boolean arg1, boolean arg2) throws Exception {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void addServiceCallConfiguration(String arg0, ServiceCallConfigurationDefinition arg1) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public DataFormat createDataFormat(String arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public FluentProducerTemplate createFluentProducerTemplate() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public FluentProducerTemplate createFluentProducerTemplate(int arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void deferStartService(Object arg0, boolean arg1) throws Exception {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public String explainDataFormatJson(String arg0, DataFormat arg1, boolean arg2) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Component getComponent(String arg0, boolean arg1, boolean arg2) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getGlobalOption(String arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Map<String, String> getGlobalOptions() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public HeadersMapFactory getHeadersMapFactory() {
+        return new DefaultHeadersMapFactory();
+    }
+
+    @Override
+    public HealthCheckRegistry getHealthCheckRegistry() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public HystrixConfigurationDefinition getHystrixConfiguration(String arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Set<LogListener> getLogListeners() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ManagedCamelContextMBean getManagedCamelContext() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T extends ManagedProcessorMBean> T getManagedProcessor(String arg0, Class<T> arg1) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T extends ManagedRouteMBean> T getManagedRoute(String arg0, Class<T> arg1) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public MessageHistoryFactory getMessageHistoryFactory() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Processor getProcessor(String arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T extends Processor> T getProcessor(String arg0, Class<T> arg1) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ProcessorDefinition getProcessorDefinition(String arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T extends ProcessorDefinition> T getProcessorDefinition(String arg0, Class<T> arg1) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ReloadStrategy getReloadStrategy() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public RestConfiguration getRestConfiguration(String arg0, boolean arg1) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Collection<RestConfiguration> getRestConfigurations() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public RouteController getRouteController() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public RuntimeCamelCatalog getRuntimeCamelCatalog() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public SSLContextParameters getSSLContextParameters() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ServiceCallConfigurationDefinition getServiceCallConfiguration(String arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public TransformerRegistry getTransformerRegistry() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<TransformerDefinition> getTransformers() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public long getUptimeMillis() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public ValidatorRegistry getValidatorRegistry() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<ValidatorDefinition> getValidators() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T> Set<T> hasServices(Class<T> arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean isLoadTypeConverters() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean isUseDataType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean isVetoStarted() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public RestsDefinition loadRestsDefinition(InputStream arg0) throws Exception {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Transformer resolveTransformer(String arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Transformer resolveTransformer(DataType arg0, DataType arg1) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Validator resolveValidator(DataType arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void setGlobalOptions(Map<String, String> arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setHeadersMapFactory(HeadersMapFactory arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setHealthCheckRegistry(HealthCheckRegistry arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setHystrixConfiguration(HystrixConfigurationDefinition arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setHystrixConfigurations(List<HystrixConfigurationDefinition> arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setLoadTypeConverters(Boolean arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setMessageHistoryFactory(MessageHistoryFactory arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setReloadStrategy(ReloadStrategy arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setRouteController(RouteController arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setSSLContextParameters(SSLContextParameters arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setServiceCallConfiguration(ServiceCallConfigurationDefinition arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setServiceCallConfigurations(List<ServiceCallConfigurationDefinition> arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setTransformers(List<TransformerDefinition> arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setUseDataType(Boolean arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setValidators(List<ValidatorDefinition> arg0) {
+        // TODO Auto-generated method stub
+        
     }
 
 }
