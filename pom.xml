@@ -64,7 +64,24 @@ limitations under the License.
          <groupId>com.att.nsa</groupId>
          <artifactId>cambriaClient</artifactId>
          <version>0.0.1</version>
+	 <exclusions>
+                <exclusion>
+                  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpclient</artifactId>
+                </exclusion>
+                <exclusion>
+                  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpclient-cache</artifactId>
+                </exclusion>
+            </exclusions>
       </dependency>
+
+      <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.5</version>
+      </dependency>
+
       <!-- Dependencies for the REST Client component -->
       <!-- Library to obfuscate encrypted passwords -->
       <dependency>
