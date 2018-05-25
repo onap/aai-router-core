@@ -26,7 +26,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.camel.Endpoint;
 import org.junit.Before;
@@ -46,23 +45,23 @@ public class EventBusTest {
     @Test
     public void validateProducer() throws Exception {
         try {
-            EventBusComponent rc = new EventBusComponent();            
-            EventBusEndpoint endpoint = new EventBusEndpoint("http://host.com:8443/endpoint", rc);
-            endpoint.setApiSecret("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
-            endpoint.setApiKey("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
+            DMaaPEventBusComponent rc = new DMaaPEventBusComponent();
+            DMaaPEventBusEndpoint endpoint = new DMaaPEventBusEndpoint("http://host.com:8443/endpoint", rc);
+            endpoint.setPassword("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
+            endpoint.setUsername("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
             endpoint.setEventTopic("eventTopic");
-            endpoint.setGroupId("groupId");
-            endpoint.setGroupName("gn");
+            endpoint.setConsumerId("groupId");
+            endpoint.setConsumerGroup("gn");
             endpoint.setName("name");
             endpoint.setPoolSize(45);
             endpoint.setPollingDelay(10);
             endpoint.setUrl("url");
 
-            assertTrue(endpoint.getApiSecret().compareTo("onapSecret") == 0);
-            assertTrue(endpoint.getApiKey().compareTo("onapSecret") == 0);
+            assertTrue(endpoint.getPassword().compareTo("onapSecret") == 0);
+            assertTrue(endpoint.getUsername().compareTo("onapSecret") == 0);
             assertTrue(endpoint.getEventTopic().compareTo("eventTopic") == 0);
-            assertTrue(endpoint.getGroupId().compareTo("groupId") == 0);
-            assertTrue(endpoint.getGroupName().compareTo("gn") == 0);
+            assertTrue(endpoint.getConsumerId().compareTo("groupId") == 0);
+            assertTrue(endpoint.getConsumerGroup().compareTo("gn") == 0);
             assertTrue(endpoint.getName().compareTo("name") == 0);
             assertTrue(endpoint.getPoolSize() == 45);
             assertTrue(endpoint.getPollingDelay() == 10);
@@ -84,7 +83,7 @@ public class EventBusTest {
     
     @Test
     public void validateEventBusComponent() throws Exception {
-        EventBusComponent rc = new EventBusComponent(new TestCamelContext());
+        DMaaPEventBusComponent rc = new DMaaPEventBusComponent(new TestCamelContext());
         Endpoint endpoint = rc.createEndpoint("http://host.com:8443/endpoint", null, new HashMap<String, Object>());
         assertTrue(endpoint.getEndpointUri().equals("http://host.com:8443/endpoint"));
     }
@@ -92,22 +91,22 @@ public class EventBusTest {
     @Test
     public void validateConsumer() throws Exception {
         try {
-            EventBusComponent rc = new EventBusComponent();
-            EventBusEndpoint endpoint = new EventBusEndpoint("http://host.com:8443/endpoint", rc);
+            DMaaPEventBusComponent rc = new DMaaPEventBusComponent();
+            DMaaPEventBusEndpoint endpoint = new DMaaPEventBusEndpoint("http://host.com:8443/endpoint", rc);
 
-            endpoint.setApiSecret("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
-            endpoint.setApiKey("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
+            endpoint.setPassword("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
+            endpoint.setUsername("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
             endpoint.setEventTopic("eventTopic");
-            endpoint.setGroupId("groupId");
-            endpoint.setGroupName("gn");
+            endpoint.setConsumerId("groupId");
+            endpoint.setConsumerGroup("gn");
             endpoint.setName("name");
             endpoint.setPoolSize(45);
             endpoint.setPollingDelay(10);
             endpoint.setUrl("url");
 
             TestProcessor processor = new TestProcessor();
-            EventBusConsumer consumer = new EventBusConsumer(endpoint, processor);
-            
+            EventBusConsumer consumer = (EventBusConsumer)endpoint.createConsumer(processor);
+
         }
         catch (Exception ex) {
             StringWriter writer = new StringWriter();

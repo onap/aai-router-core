@@ -27,22 +27,22 @@ import org.apache.camel.impl.UriEndpointComponent;
 import java.util.Map;
 
 /**
- * Represents the component that manages {@link EventBusEndpoint}.
+ * Represents the component that manages {@link KafkaEventBusEndpoint}.
  */
-public class EventBusComponent extends UriEndpointComponent {
+public class KafkaEventBusComponent extends UriEndpointComponent {
 
-  public EventBusComponent() {
-    super(EventBusEndpoint.class);
+  public KafkaEventBusComponent() {
+    super(KafkaEventBusEndpoint.class);
   }
 
-  public EventBusComponent(CamelContext context) {
-    super(context, EventBusEndpoint.class);
+  public KafkaEventBusComponent(CamelContext context) {
+    super(context, KafkaEventBusEndpoint.class);
   }
 
  @Override
   protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters)
       throws Exception {
-    Endpoint endpoint = new EventBusEndpoint(uri, this);
+    Endpoint endpoint = new KafkaEventBusEndpoint(uri, this);
     setProperties(endpoint, parameters);
     return endpoint;
   }

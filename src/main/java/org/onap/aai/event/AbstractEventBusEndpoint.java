@@ -20,22 +20,24 @@
  */
 package org.onap.aai.event;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.Component;
+import org.apache.camel.impl.DefaultEndpoint;
 
-/**
- * The EventBus producer.
- */
-public class EventBusProducer extends DefaultProducer {
-  private AbstractEventBusEndpoint endpoint;
+public abstract class AbstractEventBusEndpoint extends DefaultEndpoint {
+  public AbstractEventBusEndpoint() {
+  }
 
-  public EventBusProducer(AbstractEventBusEndpoint endpoint) {
-    super(endpoint);
-    this.endpoint = endpoint;
+  public AbstractEventBusEndpoint(String endpointUri, Component component) {
+    super(endpointUri, component);
   }
-  @Override
-  public void process(Exchange exchange) throws Exception {
-    // Publishing to event bus is currently not supported
+
+  public AbstractEventBusEndpoint(String endpointUri) {
+    super(endpointUri);
   }
+
+  abstract void close();
+  abstract int getPollingDelay();
+  abstract int getPoolSize();
+  abstract String getEventTopic();
 
 }

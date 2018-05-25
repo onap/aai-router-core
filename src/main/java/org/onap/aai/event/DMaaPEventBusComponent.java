@@ -20,22 +20,30 @@
  */
 package org.onap.aai.event;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.CamelContext;
+import org.apache.camel.Endpoint;
+import org.apache.camel.impl.UriEndpointComponent;
+
+import java.util.Map;
 
 /**
- * The EventBus producer.
+ * Represents the component that manages {@link DMaaPEventBusEndpoint}.
  */
-public class EventBusProducer extends DefaultProducer {
-  private AbstractEventBusEndpoint endpoint;
+public class DMaaPEventBusComponent extends UriEndpointComponent {
 
-  public EventBusProducer(AbstractEventBusEndpoint endpoint) {
-    super(endpoint);
-    this.endpoint = endpoint;
-  }
-  @Override
-  public void process(Exchange exchange) throws Exception {
-    // Publishing to event bus is currently not supported
+  public DMaaPEventBusComponent() {
+    super(DMaaPEventBusEndpoint.class);
   }
 
+  public DMaaPEventBusComponent(CamelContext context) {
+    super(context, DMaaPEventBusEndpoint.class);
+  }
+
+ @Override
+  protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters)
+      throws Exception {
+    Endpoint endpoint = new DMaaPEventBusEndpoint(uri, this);
+    setProperties(endpoint, parameters);
+    return endpoint;
+  }
 }
