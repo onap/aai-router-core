@@ -65,7 +65,7 @@ public class DMaaPEventBusEndpoint extends AbstractEventBusEndpoint {
   private int pollingDelay = 30000;
   @UriParam(label = "transportType")
   @Metadata(required = "true", defaultValue="HTTPAUTH")
-  private String transportType;
+  private String transportType = "HTTPAUTH";
 
   private DMaaPEventConsumer dmaapConsumer;
   
@@ -91,7 +91,7 @@ public class DMaaPEventBusEndpoint extends AbstractEventBusEndpoint {
   @Override
   public Consumer createConsumer(Processor processor) throws Exception {
     // TODO: other overloads based on filled-in properties
-    dmaapConsumer = new DMaaPEventConsumer(url, eventTopic, Password.deobfuscate(username), Password.deobfuscate(password), consumerGroup, consumerId, 15000, 1000, transportType);
+    dmaapConsumer = new DMaaPEventConsumer(url, eventTopic, username, Password.deobfuscate(password), consumerGroup, consumerId, 15000, 1000, transportType);
     return new EventBusConsumer(this, processor, dmaapConsumer);
   }
   @Override
