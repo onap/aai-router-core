@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_03c30539",
+        "filename": "src/main/java/org/onap/aai/event/EventBusEndPoint.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2401
+      },
+      "writtenOn": "2018-06-14T16:38:34Z",
+      "side": 1,
+      "message": "Route file would get change to something like this:\n\u003cfrom uri\u003d\"event-bus:mybus/?eventTopic\u003dAAI-EVENT\u0026amp;consumer\u003d#consumerBean\"/\u003e\n\nand consumerBean would be defined in the bean xml file along with others like:   \n\u003cbean id\u003d\"consumerBean\" class\u003d\"org.onap.aai.event.client.KafkaEventConsumer\" \u003e\n      \u003cconstructor-arg name\u003d\"hosts\" value\u003d\"host:port\" /\u003e\n      \u003cconstructor-arg name\u003d\"topic\" value\u003d\"testing\" /\u003e\n      \u003cconstructor-arg name\u003d\"groupId\" value\u003d\"test\" /\u003e\n  \u003c/bean\u003e",
+      "revId": "82f4f1ccada97fa394f88cf208ce526ff5ebf751",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
