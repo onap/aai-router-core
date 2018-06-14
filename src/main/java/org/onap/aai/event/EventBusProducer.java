@@ -22,17 +22,22 @@ package org.onap.aai.event;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultProducer;
+import org.onap.aai.event.api.EventPublisher;
 
 /**
  * The EventBus producer.
  */
 public class EventBusProducer extends DefaultProducer {
   private AbstractEventBusEndpoint endpoint;
+  
+  private EventPublisher publisher;
 
-  public EventBusProducer(AbstractEventBusEndpoint endpoint) {
-    super(endpoint);
-    this.endpoint = endpoint;
+  public EventBusProducer(AbstractEventBusEndpoint endpoint, EventPublisher publisher) {
+	    super(endpoint);
+	    this.endpoint = endpoint;
+	    this.publisher = publisher;
   }
+  
   @Override
   public void process(Exchange exchange) throws Exception {
     // Publishing to event bus is currently not supported

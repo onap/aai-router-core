@@ -23,17 +23,49 @@ package org.onap.aai.event;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
+import org.apache.camel.impl.DefaultMessage;
+import org.apache.camel.impl.MessageSupport;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.onap.aai.event.api.EventConsumer;
+import org.onap.aai.event.api.EventPublisher;
 
+import com.att.aft.dme2.hazelcast.core.Message;
+
+@RunWith(MockitoJUnitRunner.class)
 public class EventBusTest {
+	@Mock
+    public EventConsumer consumer;
+	
+	@Mock
+    public EventPublisher publisher;
+	
+	@Mock
+	public CamelContext context;
+	
+	@Mock
+	public Processor processor;
 
-    /**
+	@Mock
+	Exchange exchange;
+	
+	@Mock
+	AbstractEventBusEndpoint endPoint;
+	
+	/**
      * Test case initialization
      * 
      * @throws Exception the exception
@@ -44,77 +76,60 @@ public class EventBusTest {
 
     @Test
     public void validateProducer() throws Exception {
-        try {
-            DMaaPEventBusComponent rc = new DMaaPEventBusComponent();
-            DMaaPEventBusEndpoint endpoint = new DMaaPEventBusEndpoint("http://host.com:8443/endpoint", rc);
-            endpoint.setPassword("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
-            endpoint.setUsername("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
-            endpoint.setEventTopic("eventTopic");
-            endpoint.setConsumerId("groupId");
-            endpoint.setConsumerGroup("gn");
-            endpoint.setName("name");
-            endpoint.setPoolSize(45);
-            endpoint.setPollingDelay(10);
-            endpoint.setUrl("url");
-
-            assertTrue(endpoint.getPassword().compareTo("onapSecret") == 0);
-            assertTrue(endpoint.getUsername().compareTo("onapSecret") == 0);
-            assertTrue(endpoint.getEventTopic().compareTo("eventTopic") == 0);
-            assertTrue(endpoint.getConsumerId().compareTo("groupId") == 0);
-            assertTrue(endpoint.getConsumerGroup().compareTo("gn") == 0);
-            assertTrue(endpoint.getName().compareTo("name") == 0);
-            assertTrue(endpoint.getPoolSize() == 45);
-            assertTrue(endpoint.getPollingDelay() == 10);
-            assertTrue(endpoint.getUrl().compareTo("url") == 0);
-            assertFalse(endpoint.isSingleton());
-
-            EventBusProducer producer = (EventBusProducer)endpoint.createProducer();
-            assertTrue(producer.getEndpoint() != null);
-        }
-        catch (Exception ex) {
-            StringWriter writer = new StringWriter();
-            PrintWriter printWriter = new PrintWriter( writer );
-            ex.printStackTrace( printWriter );
-            printWriter.flush();
-            System.out.println(writer.toString());
-            throw ex;
-        }
+    	EventBusComponent rc = new EventBusComponent();
+        EventBusEndPoint endpoint = new EventBusEndPoint("http://host.com:8443/endpoint", rc);
+        endpoint.setEventTopic("eventTopic");
+        endpoint.setPublisher(publisher);
+        endpoint.setPoolSize(45);
+        endpoint.setPollingDelay(10);
+        
+        assertTrue(endpoint.getEventTopic().compareTo("eventTopic") == 0);
+        assertTrue(endpoint.getPoolSize() == 45);
+        assertTrue(endpoint.getPollingDelay() == 10);
+        assertFalse(endpoint.isSingleton());
+        EventBusProducer producer = (EventBusProducer)endpoint.createProducer();
+        assertTrue(producer.getEndpoint() != null);
+       	endpoint.close();
     }
     
     @Test
     public void validateEventBusComponent() throws Exception {
-        DMaaPEventBusComponent rc = new DMaaPEventBusComponent(new TestCamelContext());
+        EventBusComponent rc = new EventBusComponent(context);
         Endpoint endpoint = rc.createEndpoint("http://host.com:8443/endpoint", null, new HashMap<String, Object>());
         assertTrue(endpoint.getEndpointUri().equals("http://host.com:8443/endpoint"));
     }
     
     @Test
     public void validateConsumer() throws Exception {
-        try {
-            DMaaPEventBusComponent rc = new DMaaPEventBusComponent();
-            DMaaPEventBusEndpoint endpoint = new DMaaPEventBusEndpoint("http://host.com:8443/endpoint", rc);
-
-            endpoint.setPassword("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
-            endpoint.setUsername("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
-            endpoint.setEventTopic("eventTopic");
-            endpoint.setConsumerId("groupId");
-            endpoint.setConsumerGroup("gn");
-            endpoint.setName("name");
-            endpoint.setPoolSize(45);
-            endpoint.setPollingDelay(10);
-            endpoint.setUrl("url");
-
-            TestProcessor processor = new TestProcessor();
-            EventBusConsumer consumer = (EventBusConsumer)endpoint.createConsumer(processor);
-
-        }
-        catch (Exception ex) {
-            StringWriter writer = new StringWriter();
-            PrintWriter printWriter = new PrintWriter( writer );
-            ex.printStackTrace( printWriter );
-            printWriter.flush();
-            System.out.println(writer.toString());
-            throw ex;
-        }
+        EventBusComponent rc = new EventBusComponent();
+        EventBusEndPoint endpoint = new EventBusEndPoint("http://host.com:8443/endpoint", rc);
+        
+        endpoint.setConsumer(consumer);
+        endpoint.setEventTopic("eventTopic");
+        endpoint.setPoolSize(45);
+        endpoint.setPollingDelay(10);
+        
+        assertTrue(endpoint.getEventTopic().compareTo("eventTopic") == 0);
+        assertTrue(endpoint.getPoolSize() == 45);
+        assertTrue(endpoint.getPollingDelay() == 10);
+        assertFalse(endpoint.isSingleton());
+        
+        EventBusConsumer consumer = (EventBusConsumer)endpoint.createConsumer(processor);
+    }
+    
+    @Test
+    public void validateConsumerPoll() throws Exception {
+    	MessageSupport me = new DefaultMessage(context);
+    	List<String> list = new ArrayList<>();
+    	list.add("Message 1");
+    	list.add("Message 2");
+    	
+    	Mockito.when(consumer.consumeAndCommit()).thenReturn(list);
+        Mockito.when(endPoint.createExchange()).thenReturn(exchange);
+        Mockito.when(exchange.getIn()).thenReturn(me);
+        Mockito.when(exchange.getOut()).thenReturn(me);
+        
+        EventBusConsumer busConsumer = new EventBusConsumer(endPoint, processor, consumer);
+        int messages = busConsumer.poll();
     }
 }

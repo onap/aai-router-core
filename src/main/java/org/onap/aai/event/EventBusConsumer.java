@@ -31,7 +31,6 @@ import org.onap.aai.cl.api.Logger;
 import org.onap.aai.cl.eelf.LoggerFactory;
 import org.onap.aai.cl.mdc.MdcContext;
 
-import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 

@@ -2,8 +2,8 @@
  * ============LICENSE_START=======================================================
  * org.onap.aai
  * ================================================================================
- * Copyright © 2017-2018 AT&T Intellectual Property. All rights reserved.
- * Copyright © 2017-2018 Amdocs
+ * Copyright © 2018 AT&T Intellectual Property. All rights reserved.
+ * Copyright © 2018 Amdocs
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,30 +20,24 @@
  */
 package org.onap.aai.event;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.Endpoint;
-import org.apache.camel.impl.UriEndpointComponent;
-
 import java.util.Map;
 
-/**
- * Represents the component that manages {@link KafkaEventBusEndpoint}.
- */
-public class KafkaEventBusComponent extends UriEndpointComponent {
+import org.apache.camel.CamelContext;
+import org.apache.camel.Endpoint;
+import org.apache.camel.impl.DefaultComponent;
 
-  public KafkaEventBusComponent() {
-    super(KafkaEventBusEndpoint.class);
-  }
-
-  public KafkaEventBusComponent(CamelContext context) {
-    super(context, KafkaEventBusEndpoint.class);
-  }
-
- @Override
-  protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters)
-      throws Exception {
-    Endpoint endpoint = new KafkaEventBusEndpoint(uri, this);
-    setProperties(endpoint, parameters);
-    return endpoint;
-  }
+public class EventBusComponent extends DefaultComponent {
+	public EventBusComponent() {
+		super();
+	}
+	public EventBusComponent(CamelContext context) {
+		super(context);
+	}
+	
+	@Override
+	protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
+		Endpoint endpoint = new EventBusEndPoint(uri, this);
+		setProperties(endpoint, parameters);
+		return endpoint;
+	}
 }

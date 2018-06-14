@@ -24,18 +24,12 @@ import org.apache.camel.Component;
 import org.apache.camel.impl.DefaultEndpoint;
 
 public abstract class AbstractEventBusEndpoint extends DefaultEndpoint {
-  public AbstractEventBusEndpoint() {
-  }
 
   public AbstractEventBusEndpoint(String endpointUri, Component component) {
     super(endpointUri, component);
   }
 
-  public AbstractEventBusEndpoint(String endpointUri) {
-    super(endpointUri);
-  }
-
-  abstract void close();
+  abstract void close() throws Exception;
   abstract int getPollingDelay();
   abstract int getPoolSize();
   abstract String getEventTopic();
