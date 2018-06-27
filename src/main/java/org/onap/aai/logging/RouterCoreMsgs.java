@@ -37,6 +37,17 @@ public enum RouterCoreMsgs implements LogMessageEnum {
   EVENT_PROCESSING_EXCEPTION,
 
   /**
+   * Successfully loaded schema: {0}
+   *
+   * <p>Arguments:
+   * {0} = oxm filename
+   */
+  LOADED_OXM_FILE,
+
+  /** Failed to load the schemaIngest.properties file */
+  SCHEMA_INGEST_LOAD_ERROR,
+
+  /**
    * Arguments: {0} = Creation exception
    */
   EVENT_CONSUMER_CREATION_EXCEPTION;
