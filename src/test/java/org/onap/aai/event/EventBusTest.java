@@ -43,8 +43,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.onap.aai.event.api.EventConsumer;
 import org.onap.aai.event.api.EventPublisher;
 
-import com.att.aft.dme2.hazelcast.core.Message;
-
 @RunWith(MockitoJUnitRunner.class)
 public class EventBusTest {
 	@Mock
