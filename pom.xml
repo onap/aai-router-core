@@ -42,7 +42,7 @@ limitations under the License.
       <sonar.jacoco.reportPath>${project.build.directory}/code-coverage/jacoco-ut.exec</sonar.jacoco.reportPath>
       <sonar.jacoco.reportMissing.force.zero>false</sonar.jacoco.reportMissing.force.zero>
       <sonar.projectVersion>${project.version}</sonar.projectVersion>
-      <camel-spring-boot.version>2.22.0</camel-spring-boot.version>
+      <camel-spring-boot.version>2.22.1</camel-spring-boot.version>
    </properties>
    <dependencies>
       <dependency>
