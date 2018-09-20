@@ -1,4 +1,7 @@
 # Overview
+
+[![alt text](https://bestpractices.coreinfrastructure.org/projects/1737/badge)](https://bestpractices.coreinfrastructure.org/projects/1737)
+
 This component contains a number of general Apache Camel components which are intended for use by the data-router.
 
 # Maven Dependency
