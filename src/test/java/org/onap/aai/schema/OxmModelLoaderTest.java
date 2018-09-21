@@ -20,29 +20,44 @@
  */
 package org.onap.aai.schema;
 
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
+
 import org.eclipse.persistence.dynamic.DynamicType;
 import org.eclipse.persistence.internal.helper.DatabaseField;
 import org.eclipse.persistence.jaxb.dynamic.DynamicJAXBContext;
 import org.eclipse.persistence.mappings.DatabaseMapping;
 import org.junit.Test;
-import org.onap.aai.schema.OxmModelLoader;
+import org.junit.runner.RunWith;
+import org.onap.aai.setup.SchemaLocationsBean;
+import org.onap.aai.setup.SchemaVersions;
 import org.onap.aai.util.EntityOxmReferenceHelper;
 import org.onap.aai.util.ExternalOxmModelProcessor;
-import org.onap.aai.setup.Version;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/test/resources/spring-beans/data-router-oxm.xml")
 public class OxmModelLoaderTest {
 
+  @Autowired
+  private SchemaVersions schemaVersions;
+  @Autowired
+  private SchemaLocationsBean schemaLocationsBean;
+  
     @Test
     public void testLoadingMultipleOxmFiles() {
+      
         ArrayList<ExternalOxmModelProcessor> externalOxmModelProcessors = new ArrayList<ExternalOxmModelProcessor>();
         externalOxmModelProcessors.add(EntityOxmReferenceHelper.getInstance());
         OxmModelLoader.registerExternalOxmModelProcessors(externalOxmModelProcessors);
-        OxmModelLoader.loadModels();
+        OxmModelLoader.loadModels(schemaVersions, schemaLocationsBean);
 
-        DynamicJAXBContext jaxbContext = OxmModelLoader.getContextForVersion(Version.getLatest().toString());
+        DynamicJAXBContext jaxbContext = OxmModelLoader.getContextForVersion("v13", schemaVersions, schemaLocationsBean);
 
         DynamicType pserver = jaxbContext.getDynamicType("Pserver");
         DynamicType genericVnf = jaxbContext.getDynamicType("GenericVnf");
@@ -63,6 +78,7 @@ public class OxmModelLoaderTest {
             String keyName = f.getName().substring(0, f.getName().indexOf("/"));
             assertTrue(keyName.equals("vnf-id"));
         }
-
+      
     }
+    
 }

@@ -30,7 +30,7 @@ limitations under the License.
    <groupId>org.onap.aai.router-core</groupId>
    <artifactId>router-core</artifactId>
    <packaging>bundle</packaging>
-   <version>1.3.0-SNAPSHOT</version>
+   <version>1.3.1-SNAPSHOT</version>
    <name>aai-router-core</name>
    <properties>
       <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
@@ -93,7 +93,7 @@ limitations under the License.
       <dependency>
          <groupId>org.onap.aai.aai-common</groupId>
          <artifactId>aai-schema-ingest</artifactId>
-         <version>1.2.2</version>
+         <version>1.3.0-SNAPSHOT</version>
          <!--<exclusions>-->
             <!--<exclusion>-->
                <!--<groupId>com.google.guava</groupId>-->
@@ -128,6 +128,17 @@ limitations under the License.
        <artifactId>mockito-all</artifactId>
        <version>1.10.19</version>
        <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>4.3.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>4.3.0.RELEASE</version>
+      <scope>test</scope>
     </dependency>
    </dependencies>
    <build>

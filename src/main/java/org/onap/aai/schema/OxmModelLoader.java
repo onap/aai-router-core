@@ -34,7 +34,9 @@ import org.onap.aai.util.ExternalOxmModelProcessor;
 import org.onap.aai.nodes.NodeIngestor;
 import org.onap.aai.setup.ConfigTranslator;
 import org.onap.aai.setup.SchemaLocationsBean;
-import org.onap.aai.setup.Version;
+import org.onap.aai.setup.SchemaVersion;
+import org.onap.aai.setup.SchemaVersions;
+import org.onap.aai.setup.AAIConfigTranslator;
 
 public class OxmModelLoader {
 
@@ -48,14 +50,11 @@ public class OxmModelLoader {
         throw new IllegalStateException("Utility class");
     }
 
-    public static synchronized void loadModels() {
-        SchemaIngestPropertiesReader schemaIngestPropReader = new SchemaIngestPropertiesReader();
-        SchemaLocationsBean schemaLocationsBean = new SchemaLocationsBean();
-        schemaLocationsBean.setNodeDirectory(schemaIngestPropReader.getNodeDir());
-        ConfigTranslator configTranslator = new OxmConfigTranslator(schemaLocationsBean);
+    public static synchronized void loadModels(SchemaVersions schemaVersions, SchemaLocationsBean schemaLocationsBean) {
+        ConfigTranslator configTranslator = new AAIConfigTranslator(schemaLocationsBean, schemaVersions);
         NodeIngestor nodeIngestor = new NodeIngestor(configTranslator);
 
-        for (Version oxmVersion : Version.values()) {
+        for (SchemaVersion oxmVersion : schemaVersions.getVersions()) {
             DynamicJAXBContext jaxbContext = nodeIngestor.getContextForVersion(oxmVersion);
             if (jaxbContext != null) {
                 loadModel(oxmVersion.toString(), jaxbContext);
@@ -63,9 +62,9 @@ public class OxmModelLoader {
         }
     }
 
-    public static DynamicJAXBContext getContextForVersion(String version) {
+    public static DynamicJAXBContext getContextForVersion(String version, SchemaVersions schemaVersions, SchemaLocationsBean schemaLocationsBean) {
         if (versionContextMap == null || versionContextMap.isEmpty()) {
-            loadModels();
+            loadModels(schemaVersions, schemaLocationsBean);
         } else if (!versionContextMap.containsKey(version)) {
             throw new NoSuchElementException(Status.NOT_FOUND.toString());
         }
