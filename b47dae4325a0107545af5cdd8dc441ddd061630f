@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: James Forsyth <jf2512@att.com>
+Submitted-by: James Forsyth <jf2512@att.com>
+Submitted-at: Fri, 12 Oct 2018 13:40:22 +0000
+Reviewed-on: https://gerrit.onap.org/r/70355
+Project: aai/router-core
+Branch: refs/heads/master
