@@ -80,6 +80,12 @@ limitations under the License.
       </dependency>
 
       <dependency>
+           <groupId>org.onap.aai.event-client</groupId>
+           <artifactId>event-client-rabbitmq</artifactId>
+           <version>${event.client.version}</version>
+      </dependency>
+
+      <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.5</version>
