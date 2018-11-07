@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Francis Paquette <Francis.Paquette@amdocs.com>
+Code-Review+1: Reneal  Rogers <reneal.rogers@amdocs.com>
+Code-Review+2: Steven Blimkie <Steven.Blimkie@amdocs.com>
+Submitted-by: Steven Blimkie <Steven.Blimkie@amdocs.com>
+Submitted-at: Wed, 07 Nov 2018 20:17:34 +0000
+Reviewed-on: https://gerrit.onap.org/r/71998
+Project: aai/router-core
+Branch: refs/heads/master
