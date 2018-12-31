@@ -11,4 +11,13 @@
   
   <bean id="schemaLocationsBean" class="org.onap.aai.setup.SchemaLocationsBean"/>
   
+  <bean id="oxmConfigTranslator" class="org.onap.aai.setup.AAIConfigTranslator">
+    	<constructor-arg ref="schemaLocationsBean" />
+    	<constructor-arg ref="schemaVersions" />
+  </bean>
+	
+  <bean id="nodeIngestor" class="org.onap.aai.nodes.NodeIngestor">
+		<constructor-arg ref="oxmConfigTranslator" />
+  </bean>
+  
 </beans>
