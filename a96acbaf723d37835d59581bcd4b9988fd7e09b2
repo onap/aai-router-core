@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_245b712f",
+        "filename": "src/main/java/org/onap/aai/schema/OxmModelLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 651
+      },
+      "writtenOn": "2018-12-31T16:51:05Z",
+      "side": 1,
+      "message": "Take away all the red from the lines that got modified.\n(These are extra spaces usually)",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 4
+      },
+      "revId": "a96acbaf723d37835d59581bcd4b9988fd7e09b2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
