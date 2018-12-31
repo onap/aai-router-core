@@ -32,6 +32,7 @@ import org.eclipse.persistence.jaxb.dynamic.DynamicJAXBContext;
 import org.eclipse.persistence.mappings.DatabaseMapping;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.onap.aai.nodes.NodeIngestor;
 import org.onap.aai.setup.SchemaLocationsBean;
 import org.onap.aai.setup.SchemaVersions;
 import org.onap.aai.util.EntityOxmReferenceHelper;
@@ -44,17 +45,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("file:src/test/resources/spring-beans/data-router-oxm.xml")
 public class OxmModelLoaderTest {
 
-  @Autowired
-  private SchemaVersions schemaVersions;
-  @Autowired
-  private SchemaLocationsBean schemaLocationsBean;
-  
+    @Autowired
+    private SchemaVersions schemaVersions;
+    @Autowired
+    private SchemaLocationsBean schemaLocationsBean;
+    @Autowired
+    private NodeIngestor nodeIngestor;
+
     @Test
     public void testLoadingMultipleOxmFiles() {
-      
+
         ArrayList<ExternalOxmModelProcessor> externalOxmModelProcessors = new ArrayList<ExternalOxmModelProcessor>();
         externalOxmModelProcessors.add(EntityOxmReferenceHelper.getInstance());
         OxmModelLoader.registerExternalOxmModelProcessors(externalOxmModelProcessors);
+        OxmModelLoader.setNodeIngestor(nodeIngestor);
         OxmModelLoader.loadModels(schemaVersions, schemaLocationsBean);
 
         DynamicJAXBContext jaxbContext = OxmModelLoader.getContextForVersion("v13", schemaVersions, schemaLocationsBean);

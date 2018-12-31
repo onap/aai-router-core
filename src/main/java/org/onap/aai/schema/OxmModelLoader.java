@@ -32,11 +32,10 @@ import org.onap.aai.cl.eelf.LoggerFactory;
 import org.onap.aai.logging.RouterCoreMsgs;
 import org.onap.aai.util.ExternalOxmModelProcessor;
 import org.onap.aai.nodes.NodeIngestor;
-import org.onap.aai.setup.ConfigTranslator;
 import org.onap.aai.setup.SchemaLocationsBean;
 import org.onap.aai.setup.SchemaVersion;
 import org.onap.aai.setup.SchemaVersions;
-import org.onap.aai.setup.AAIConfigTranslator;
+
 
 public class OxmModelLoader {
 
@@ -46,19 +45,19 @@ public class OxmModelLoader {
     private static final org.onap.aai.cl.api.Logger logger =
             LoggerFactory.getInstance().getLogger(OxmModelLoader.class.getName());
 
-    private OxmModelLoader() {
-        throw new IllegalStateException("Utility class");
+    private static NodeIngestor nodeIngestor;
+
+    private OxmModelLoader(NodeIngestor setNodeIngestor) {
+        nodeIngestor = setNodeIngestor;
     }
 
     public static synchronized void loadModels(SchemaVersions schemaVersions, SchemaLocationsBean schemaLocationsBean) {
-        ConfigTranslator configTranslator = new AAIConfigTranslator(schemaLocationsBean, schemaVersions);
-        NodeIngestor nodeIngestor = new NodeIngestor(configTranslator);
 
         for (SchemaVersion oxmVersion : schemaVersions.getVersions()) {
-            DynamicJAXBContext jaxbContext = nodeIngestor.getContextForVersion(oxmVersion);
-            if (jaxbContext != null) {
-                loadModel(oxmVersion.toString(), jaxbContext);
-            }
+          DynamicJAXBContext jaxbContext = nodeIngestor.getContextForVersion(oxmVersion);
+          if (jaxbContext != null) {
+            loadModel(oxmVersion.toString(), jaxbContext);
+          }
         }
     }
 
@@ -84,6 +83,14 @@ public class OxmModelLoader {
 
     public static Map<String, DynamicJAXBContext> getVersionContextMap() {
         return versionContextMap;
+    }
+
+    public static NodeIngestor getNodeIngestor() {
+        return nodeIngestor;
+    }
+
+    public static void setNodeIngestor(NodeIngestor nodeIngestor) {
+        OxmModelLoader.nodeIngestor = nodeIngestor;
     }
 
     private static synchronized void loadModel(String oxmVersion, DynamicJAXBContext jaxbContext) {
