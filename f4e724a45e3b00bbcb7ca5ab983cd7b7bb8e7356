@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Serban Popescu <serban.popescu@amdocs.com>
+Code-Review+2: Steven Blimkie <Steven.Blimkie@amdocs.com>
+Submitted-by: Steven Blimkie <Steven.Blimkie@amdocs.com>
+Submitted-at: Wed, 09 Jan 2019 20:10:52 +0000
+Reviewed-on: https://gerrit.onap.org/r/75587
+Project: aai/router-core
+Branch: refs/heads/master
