@@ -241,10 +241,12 @@ public class RestClientProducer extends DefaultProducer {
             + " keystore=" + keystoreFilename + " keystorePassword=" + keystorePassword);
       }
 
+      String deobfuscatedCertPassword = keystorePassword.startsWith("OBF:")?Password.deobfuscate(keystorePassword):keystorePassword;
+      
       // Create REST client for search service
       restClient = new RestClient().validateServerHostname(false).validateServerCertChain(true)
           .clientCertFile(clientCertFilename)
-          .clientCertPassword(Password.deobfuscate(keystorePassword)).trustStore(keystoreFilename);
+          .clientCertPassword(deobfuscatedCertPassword).trustStore(keystoreFilename);
     }
 
     return restClient;
