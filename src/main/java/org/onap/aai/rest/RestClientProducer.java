@@ -27,6 +27,7 @@ import org.onap.aai.event.EventBusConsumer;
 import org.onap.aai.restclient.client.Headers;
 import org.onap.aai.restclient.client.OperationResult;
 import org.onap.aai.restclient.client.RestClient;
+import org.onap.aai.restclient.enums.RestAuthenticationMode;
 import org.onap.aai.restclient.rest.HttpUtil;
 import org.onap.aai.cl.api.Logger;
 import org.onap.aai.cl.eelf.LoggerFactory;
@@ -231,22 +232,21 @@ public class RestClientProducer extends DefaultProducer {
   private RestClient getRestClient() {
 
     if (restClient == null) {
-
-      String keystoreFilename = endpoint.getEcompKeystore();
+      
       String keystorePassword = endpoint.getEcompKeystorePassword();
       String clientCertFilename = endpoint.getEcompClientCert();
 
       if (logger.isDebugEnabled()) {
         logger.debug("Instantiating REST Client with client_cert=" + clientCertFilename
-            + " keystore=" + keystoreFilename + " keystorePassword=" + keystorePassword);
+            + " keystorePassword=" + keystorePassword);
       }
 
       String deobfuscatedCertPassword = keystorePassword.startsWith("OBF:")?Password.deobfuscate(keystorePassword):keystorePassword;
       
       // Create REST client for search service
-      restClient = new RestClient().validateServerHostname(false).validateServerCertChain(true)
-          .clientCertFile(clientCertFilename)
-          .clientCertPassword(deobfuscatedCertPassword).trustStore(keystoreFilename);
+      restClient = new RestClient().authenticationMode(RestAuthenticationMode.SSL_CERT).validateServerHostname(false)
+              .validateServerCertChain(false).clientCertFile(clientCertFilename)
+              .clientCertPassword(deobfuscatedCertPassword);
     }
 
     return restClient;
