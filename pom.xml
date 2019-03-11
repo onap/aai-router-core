@@ -94,12 +94,12 @@ limitations under the License.
       <dependency>
          <groupId>org.onap.aai.aai-common</groupId>
          <artifactId>aai-schema</artifactId>
-         <version>1.4.1-SNAPSHOT</version>
+         <version>1.4.0</version>
       </dependency>
       <dependency>
          <groupId>org.onap.aai.aai-common</groupId>
          <artifactId>aai-schema-ingest</artifactId>
-         <version>1.4.1-SNAPSHOT</version>
+         <version>1.4.1</version>
          <!--<exclusions>-->
             <!--<exclusion>-->
                <!--<groupId>com.google.guava</groupId>-->
