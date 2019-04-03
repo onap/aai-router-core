@@ -113,7 +113,7 @@ limitations under the License.
       <dependency>
          <groupId>org.eclipse.jetty</groupId>
          <artifactId>jetty-security</artifactId>
-         <version>9.3.8.RC0</version>
+         <version>9.3.24.v20180605</version>
       </dependency>
       <!-- ECOMP REST Client Library. -->
       <dependency>
