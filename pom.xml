@@ -30,7 +30,7 @@ limitations under the License.
    <groupId>org.onap.aai.router-core</groupId>
    <artifactId>router-core</artifactId>
    <packaging>bundle</packaging>
-   <version>1.4.0-SNAPSHOT</version>
+   <version>1.4.1-SNAPSHOT</version>
    <name>aai-router-core</name>
    <properties>
       <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
@@ -43,7 +43,7 @@ limitations under the License.
       <sonar.jacoco.reportMissing.force.zero>false</sonar.jacoco.reportMissing.force.zero>
       <sonar.projectVersion>${project.version}</sonar.projectVersion>
       <camel-spring-boot.version>2.22.1</camel-spring-boot.version>
-      <jacoco.line.coverage.limit>0.71</jacoco.line.coverage.limit>
+      <jacoco.line.coverage.limit>0.70</jacoco.line.coverage.limit>
    </properties>
    <dependencies>
       <dependency>
