@@ -30,11 +30,11 @@ limitations under the License.
    <groupId>org.onap.aai.router-core</groupId>
    <artifactId>router-core</artifactId>
    <packaging>bundle</packaging>
-   <version>1.4.1-SNAPSHOT</version>
+   <version>1.5.0-SNAPSHOT</version>
    <name>aai-router-core</name>
    <properties>
       <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
-      <event.client.version>1.4.0</event.client.version>
+      <event.client.version>1.5.0</event.client.version>
       <!-- Sonar Properties -->
       <sonar.language>java</sonar.language>
       <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
