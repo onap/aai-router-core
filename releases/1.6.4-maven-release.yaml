@@ -1,0 +1,4 @@
+distribution_type: maven
+log_dir: aai-router-core-maven-stage-master/264/
+project: router-core
+version: 1.6.4
