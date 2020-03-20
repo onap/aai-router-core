@@ -30,12 +30,12 @@ limitations under the License.
    <groupId>org.onap.aai.router-core</groupId>
    <artifactId>router-core</artifactId>
    <packaging>bundle</packaging>
-   <version>1.6.4-SNAPSHOT</version>
+   <version>1.6.5-SNAPSHOT</version>
    <name>aai-router-core</name>
    <properties>
       <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
       <aai.common.version>1.6.8</aai.common.version>
-      <event.client.version>1.5.0</event.client.version>
+      <event.client.version>1.6.4</event.client.version>
       <!-- Sonar Properties -->
       <jacoco.line.coverage.limit>0.70</jacoco.line.coverage.limit>
       <camel-spring-boot.version>2.22.1</camel-spring-boot.version>
