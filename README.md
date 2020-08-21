@@ -99,7 +99,7 @@ console as the content body for the REST request.
         <!-- Invoke the REST client, using our console input as the content body of our request. -->
         <!-- Note that we provide the paths to the client certificate and keystore, as well as   -->
         <!-- the obfuscated password for the keystore.                                           -->  
-        <to uri="rest-client:put?ecompClientCert=c:/dev/dl_microservice/target/swm/package/nix/dist_files/opt/app/ajsc-aai-data-layer-microservice/bundleconfig/etc/auth/aai-client-cert.p12&amp;ecompKeystore=c:/dev/dl_microservice/target/swm/package/nix/dist_files/opt/app/ajsc-aai-data-layer-microservice/bundleconfig/etc/auth/tomcat_keystore&amp;ecompKeystorePassword=70c87528c88dcd9f9c2558d30e817868"/>
+        <to uri="ecomp-rest:put?ecompClientCert=c:/dev/dl_microservice/target/swm/package/nix/dist_files/opt/app/ajsc-aai-data-layer-microservice/bundleconfig/etc/auth/aai-client-cert.p12&amp;ecompKeystore=c:/dev/dl_microservice/target/swm/package/nix/dist_files/opt/app/ajsc-aai-data-layer-microservice/bundleconfig/etc/auth/tomcat_keystore&amp;ecompKeystorePassword=70c87528c88dcd9f9c2558d30e817868"/>
   <to uri="stream:out" />
   
     </route> 

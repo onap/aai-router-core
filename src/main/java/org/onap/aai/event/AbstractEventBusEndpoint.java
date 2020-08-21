@@ -21,7 +21,7 @@
 package org.onap.aai.event;
 
 import org.apache.camel.Component;
-import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.camel.support.DefaultEndpoint;
 
 public abstract class AbstractEventBusEndpoint extends DefaultEndpoint {
 
@@ -29,7 +29,7 @@ public abstract class AbstractEventBusEndpoint extends DefaultEndpoint {
     super(endpointUri, component);
   }
 
-  abstract void close() throws Exception;
+  abstract void end() throws Exception;
   abstract int getPollingDelay();
   abstract int getPoolSize();
   abstract String getEventTopic();

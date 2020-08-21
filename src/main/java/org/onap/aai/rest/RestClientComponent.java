@@ -22,7 +22,8 @@ package org.onap.aai.rest;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
-import org.apache.camel.impl.UriEndpointComponent;
+import org.apache.camel.spi.annotations.Component;
+import org.apache.camel.support.DefaultComponent;
 
 import java.util.Map;
 
@@ -30,14 +31,15 @@ import java.util.Map;
 /**
  * Represents the component that manages {@link RestClientEndpoint}.
  */
-public class RestClientComponent extends UriEndpointComponent {
+@Component("ecomp-rest")
+public class RestClientComponent extends DefaultComponent {
 
   public RestClientComponent() {
-    super(RestClientEndpoint.class);
+    super();
   }
 
   public RestClientComponent(CamelContext context) {
-    super(context, RestClientEndpoint.class);
+    super(context);
   }
 
   @Override

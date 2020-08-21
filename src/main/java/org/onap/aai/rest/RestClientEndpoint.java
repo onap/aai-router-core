@@ -20,10 +20,11 @@
  */
 package org.onap.aai.rest;
 
+import org.apache.camel.Category;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
-import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.camel.support.DefaultEndpoint;
 import org.apache.camel.spi.Metadata;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
@@ -32,11 +33,9 @@ import org.apache.camel.spi.UriPath;
 import java.util.Map;
 
 
-/**
- * Represents a RestClient endpoint.
- */
 @UriEndpoint(scheme = "ecomp-rest", syntax = "ecomp-rest:op",
-    consumerClass = RestClientConsumer.class, label = "RestClient2", title = "")
+    consumerClass = RestClientConsumer.class, label = "RestClient2", title = "ecomp-rest",
+    firstVersion = "1.0.0", category = {Category.CORE})
 public class RestClientEndpoint extends DefaultEndpoint {
 
   public static final String CONTEXT_PARAM_CLIENT_CERT = "ecomp-client-cert";
@@ -48,19 +47,15 @@ public class RestClientEndpoint extends DefaultEndpoint {
   public static final String OUT_HEADER_RESPONSE_CODE = "ecomp-response-code";
   public static final String OUT_HEADER_RESPONSE_MSG = "ecomp-response-message";
 
-  @UriPath
-  @Metadata(required = "true")
+  @UriPath(description = "op")
+  @Metadata(required = true)
   private String op;
-
-  @UriParam
+  @UriParam(description = "ecomp client cert")
   private String ecompClientCert;
-
-  @UriParam
+  @UriParam(description = "ecomp key store")
   private String ecompKeystore;
-
-  @UriParam
+  @UriParam(description = "ecomp key store passwd")
   private String ecompKeystorePassword;
-
 
   public RestClientEndpoint() {}
 
@@ -68,12 +63,8 @@ public class RestClientEndpoint extends DefaultEndpoint {
     super(uri, component);
   }
 
-  public RestClientEndpoint(String endpointUri) {
-    super(endpointUri);
-  }
-
   @Override
-  protected void setProperties(Object bean, Map<String, Object> parameters) throws Exception {
+  public void setProperties(Object bean, Map<String, Object> parameters) {
     super.setProperties(bean, parameters);
   }
 

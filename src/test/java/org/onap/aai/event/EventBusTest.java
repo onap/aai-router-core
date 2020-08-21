@@ -27,13 +27,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
+import org.apache.camel.ExtendedCamelContext;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultMessage;
-import org.apache.camel.impl.MessageSupport;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.camel.support.DefaultMessage;
+import org.apache.camel.support.MessageSupport;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +51,7 @@ public class EventBusTest {
     public EventPublisher publisher;
 	
 	@Mock
-	public CamelContext context;
+	public ExtendedCamelContext context;
 	
 	@Mock
 	public Processor processor;
@@ -87,7 +86,7 @@ public class EventBusTest {
         assertFalse(endpoint.isSingleton());
         EventBusProducer producer = (EventBusProducer)endpoint.createProducer();
         assertTrue(producer.getEndpoint() != null);
-       	endpoint.close();
+        endpoint.end();
     }
     
     @Test

@@ -38,7 +38,7 @@ limitations under the License.
       <event.client.version>1.6.4</event.client.version>
       <!-- Sonar Properties -->
       <jacoco.line.coverage.limit>0.70</jacoco.line.coverage.limit>
-      <camel-spring-boot.version>2.22.1</camel-spring-boot.version>
+      <camel-spring-boot.version>3.4.0</camel-spring-boot.version>
    </properties>
 
    <dependencies>
@@ -48,11 +48,6 @@ limitations under the License.
          <version>${camel-spring-boot.version}</version>
       </dependency>
       <!-- support camel documentation -->
-      <dependency>
-         <groupId>org.apache.camel</groupId>
-         <artifactId>apt</artifactId>
-         <version>${camel-spring-boot.version}</version>
-      </dependency>
       <!-- logging -->
       <dependency>
          <groupId>org.onap.aai.logging-service</groupId>
@@ -143,9 +138,46 @@ limitations under the License.
       <defaultGoal>install</defaultGoal>
       <plugins>
          <plugin>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-package-maven-plugin</artifactId>
+            <version>${camel-spring-boot.version}</version>
+            <executions>
+               <execution>
+                  <id>generate</id>
+                  <goals>
+                     <goal>generate-component</goal>
+                  </goals>
+                  <phase>process-classes</phase>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <phase>initialize</phase>
+                  <goals>
+                     <goal>add-source</goal>
+                     <goal>add-resource</goal>
+                  </goals>
+                  <configuration>
+                     <sources>
+                        <source>src/generated/java</source>
+                     </sources>
+                     <resources>
+                        <resource>
+                           <directory>src/generated/resources</directory>
+                        </resource>
+                     </resources>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.5.1</version>
+            <version>3.8.1</version>
             <configuration>
                <source>1.8</source>
                <target>1.8</target>

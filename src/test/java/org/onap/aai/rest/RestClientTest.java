@@ -29,15 +29,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.Message;
-import org.apache.camel.impl.DefaultMessage;
+import org.apache.camel.ExtendedCamelContext;
+import org.apache.camel.support.DefaultMessage;
 import org.junit.Before;
 import org.junit.Test;
-import org.onap.aai.event.TestCamelContext;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.onap.aai.logging.RouterCoreMsgs;
 import org.onap.aai.restclient.client.Headers;
 
+@RunWith(MockitoJUnitRunner.class)
 public class RestClientTest {
+
+
+    @Mock
+    public ExtendedCamelContext context;
 
     /**
      * Test case initialization
@@ -52,13 +59,14 @@ public class RestClientTest {
     public void validate() throws Exception {
 
         try {
-            RestClientComponent rc = new RestClientComponent();
+            RestClientComponent rc = new RestClientComponent(context);
             RestClientEndpoint endpoint = new RestClientEndpoint("http://host.com:8443/endpoint", rc);
 
             endpoint.setEcompClientCert("client-cert");
             endpoint.setEcompKeystore("keystore");
             endpoint.setEcompKeystorePassword("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10");
             endpoint.setOp("GET");
+
 
             assertTrue(endpoint.getEcompClientCert().compareTo("client-cert") == 0);
             assertTrue(endpoint.getEcompKeystore().compareTo("keystore") == 0);
@@ -75,7 +83,6 @@ public class RestClientTest {
             Exchange exchange = endpoint.createExchange();
             exchange.setProperty(Exchange.TO_ENDPOINT, "mock://get");
             DefaultMessage in = (DefaultMessage)exchange.getIn();
-            in.setCamelContext(new TestCamelContext());
             
             in.setHeader(RestClientEndpoint.IN_HEADER_URL, "svc/endpoint");
             in.setHeader(Headers.FROM_APP_ID, "val1");
