@@ -21,7 +21,7 @@
 package org.onap.aai.event;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.support.DefaultProducer;
 import org.onap.aai.event.api.EventPublisher;
 
 /**

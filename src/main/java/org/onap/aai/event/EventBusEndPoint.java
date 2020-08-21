@@ -20,34 +20,40 @@
  */
 package org.onap.aai.event;
 
+import org.apache.camel.Category;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.spi.Metadata;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
+import org.apache.camel.spi.UriPath;
 import org.onap.aai.cl.api.Logger;
 import org.onap.aai.cl.eelf.LoggerFactory;
 import org.onap.aai.event.api.EventConsumer;
 import org.onap.aai.event.api.EventPublisher;
 
 @UriEndpoint(scheme = "event-bus", syntax = "event-bus:name",
-consumerClass = EventBusConsumer.class, title = "event-bus")
+consumerClass = EventBusConsumer.class, title = "event-bus",
+firstVersion = "1.0.0", category = {Category.CORE})
 public class EventBusEndPoint extends AbstractEventBusEndpoint {
-	@UriParam(label = "eventTopic")
-	@Metadata(required = "true")
+
+	@UriPath(description = "client name")
+	private String name;
+	@UriParam(label = "eventTopic", description = "event topic")
+	@Metadata(required = true)
 	private String eventTopic;
-	@UriParam(label = "poolSize")
-	@Metadata(required = "true", defaultValue="20")
+	@UriParam(label = "poolSize", description = "pool size")
+	@Metadata(required = true, defaultValue="20")
 	private int poolSize = 20;
-	@UriParam(label = "pollingDelay")
-	@Metadata(required = "true", defaultValue="30000")
+	@UriParam(label = "pollingDelay", description = "polling delay")
+	@Metadata(required = true, defaultValue="30000")
 	private int pollingDelay = 30000;
- 
+
 	EventConsumer consumer; //This would be injected via bean through camel route when passed with #
-	
+
 	EventPublisher publisher; //This would be injected via bean through camel route when passed with #
-	
+
 	private Logger logger = LoggerFactory.getInstance().getLogger(EventBusEndPoint.class);
 	
 	public EventBusEndPoint(String uri, EventBusComponent component) {
@@ -69,7 +75,7 @@ public class EventBusEndPoint extends AbstractEventBusEndpoint {
 		return false;
 	}
 	
-	void close() throws Exception {
+	void end() throws Exception {
 	   if(consumer != null)
 		   consumer.close();
 		if(publisher != null)
@@ -92,6 +98,14 @@ public class EventBusEndPoint extends AbstractEventBusEndpoint {
 	}
 	public String getEventTopic() {
 		return eventTopic;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setEventTopic(String eventTopic) {

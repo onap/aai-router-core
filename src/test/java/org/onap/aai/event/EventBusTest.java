@@ -20,6 +20,7 @@
  */
 package org.onap.aai.event;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -27,13 +28,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
+import org.apache.camel.ExtendedCamelContext;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultMessage;
-import org.apache.camel.impl.MessageSupport;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.camel.support.DefaultMessage;
+import org.apache.camel.support.MessageSupport;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +52,7 @@ public class EventBusTest {
     public EventPublisher publisher;
 	
 	@Mock
-	public CamelContext context;
+	public ExtendedCamelContext context;
 	
 	@Mock
 	public Processor processor;
@@ -74,20 +74,23 @@ public class EventBusTest {
 
     @Test
     public void validateProducer() throws Exception {
-    	EventBusComponent rc = new EventBusComponent();
+        String clientName =  "client name";
+        EventBusComponent rc = new EventBusComponent();
         EventBusEndPoint endpoint = new EventBusEndPoint("http://host.com:8443/endpoint", rc);
+        endpoint.setName(clientName);
         endpoint.setEventTopic("eventTopic");
         endpoint.setPublisher(publisher);
         endpoint.setPoolSize(45);
         endpoint.setPollingDelay(10);
-        
+
+        assertEquals(clientName, endpoint.getName());
         assertTrue(endpoint.getEventTopic().compareTo("eventTopic") == 0);
         assertTrue(endpoint.getPoolSize() == 45);
         assertTrue(endpoint.getPollingDelay() == 10);
         assertFalse(endpoint.isSingleton());
         EventBusProducer producer = (EventBusProducer)endpoint.createProducer();
         assertTrue(producer.getEndpoint() != null);
-       	endpoint.close();
+        endpoint.end();
     }
     
     @Test

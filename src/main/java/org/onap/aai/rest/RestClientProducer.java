@@ -21,9 +21,8 @@
 package org.onap.aai.rest;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.support.DefaultProducer;
 import org.eclipse.jetty.util.security.Password;
-import org.onap.aai.event.EventBusConsumer;
 import org.onap.aai.restclient.client.Headers;
 import org.onap.aai.restclient.client.OperationResult;
 import org.onap.aai.restclient.client.RestClient;

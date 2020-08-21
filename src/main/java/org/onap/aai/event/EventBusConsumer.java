@@ -25,7 +25,7 @@ import org.onap.aai.event.api.EventConsumer;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.ScheduledPollConsumer;
+import org.apache.camel.support.ScheduledPollConsumer;
 import org.onap.aai.logging.RouterCoreMsgs;
 import org.onap.aai.cl.api.Logger;
 import org.onap.aai.cl.eelf.LoggerFactory;
@@ -96,14 +96,14 @@ public class EventBusConsumer extends ScheduledPollConsumer {
   protected void doStop() throws Exception {
     super.doStop();
     if (endpoint != null) {
-      endpoint.close();
+      endpoint.end();
     }
   }
   @Override
   protected void doShutdown() throws Exception {
     super.doShutdown();
     if (endpoint != null) {
-      endpoint.close();
+      endpoint.end();
     }
   }
 
