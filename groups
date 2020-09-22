@@ -2,4 +2,3 @@
 #
 daebbf523be390041a1a9c0e340a6d833aae5043                                        	GitHub Replication
 f47a8872cd4b80c63f36aaf66e8b8f3952119c91                                        	saml/onap-gerrit-aai-router-core-committers
-ldap:cn=onap-gerrit-aai-router-core-committers,ou=Groups,dc=freestandards,dc=org	ldap/onap-gerrit-aai-router-core-committers
